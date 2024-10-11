@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import "./style.scss";
+import './style.scss';
 
 export const BUTTON_TYPES = {
   DEFAULT: 1,
@@ -12,10 +12,10 @@ const Button = ({ title, onClick, type, disabled, children }) => {
     case BUTTON_TYPES.DEFAULT:
       return (
         <button
-          type="button"
+          type='button'
           disabled={disabled}
-          className="Button"
-          data-testid="button-test-id"
+          className='Button'
+          data-testid='button-test-id'
           onClick={onClick}
           title={title}
         >
@@ -26,9 +26,9 @@ const Button = ({ title, onClick, type, disabled, children }) => {
       return (
         <input
           disabled={disabled}
-          className="Button"
-          type="submit"
-          data-testid="button-test-id"
+          className='Button'
+          type='submit'
+          data-testid='button-test-id'
           value={children}
           onClick={onClick}
           title={title}
@@ -37,10 +37,10 @@ const Button = ({ title, onClick, type, disabled, children }) => {
     default:
       return (
         <button
-          type="button"
+          type='button'
           disabled={disabled}
-          className="Button"
-          data-testid="button-test-id"
+          className='Button'
+          data-testid='button-test-id'
           onClick={onClick}
           title={title}
         >
@@ -62,8 +62,8 @@ Button.defaultProps = {
   disabled: false,
   onClick: () => null,
   type: BUTTON_TYPES.DEFAULT,
-  title: "",
-  children: null
-}
+  title: '',
+  children: null,
+};
 
 export default Button;

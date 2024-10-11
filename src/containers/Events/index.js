@@ -13,7 +13,7 @@ const EventList = () => {
   const { data, error } = useData();
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const filteredEvents = (
+  let filteredEvents = (
     (!type
       ? data?.events
       : data?.events.filter((event) => event.type === type)) || []
@@ -26,10 +26,16 @@ const EventList = () => {
     }
     return false;
   });
+
+  filteredEvents = filteredEvents.sort((evtA, evtB) =>
+    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
+  );
+
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
   };
+
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
   const typeList = new Set(data?.events.map((event) => event.type));
   return (
