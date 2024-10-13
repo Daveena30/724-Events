@@ -13,15 +13,15 @@ const Slider = () => {
       new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
     ) || [];
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setIndex((prevIndex) =>
-        prevIndex < byDateDesc.length - 1 ? prevIndex + 1 : 0
-      );
-    }, 3000);
-
-    return () => clearInterval(intervalId);
-  }, [byDateDesc.length, index]);
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setIndex((prevIndex) =>
+          prevIndex < byDateDesc.length - 1 ? prevIndex + 1 : 0
+        );
+      }, 5000);
+      return () => clearInterval(interval);
+    }, [byDateDesc]);
+  
 
   const handleRadioChange = (radioIdx) => {
     setIndex(radioIdx);
