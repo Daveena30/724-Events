@@ -15,6 +15,10 @@ import { useData } from '../../contexts/DataContext';
 const Page = () => {
   const { data } = useData();
   const last = data ? data.events[data.events.length - 1] : null;
+  console.log(last);
+
+  // Les 3 lignes au dessus remplacent celle en dessous
+  // const { last } = useData();
   return (
     <>
       <header>
@@ -117,11 +121,11 @@ const Page = () => {
           <h3>Notre derniére prestation</h3>
           {last && (
             <EventCard
-              imageSrc={last.cover}
-              title={last.title}
-              date={new Date(last.date)}
+              imageSrc={last?.cover}
+              title={last?.title}
+              date={new Date(last?.date)}
               small
-              label={last.type}
+              label={last?.type}
             />
           )}
         </div>
