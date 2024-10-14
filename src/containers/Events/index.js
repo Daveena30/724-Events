@@ -7,51 +7,57 @@ import ModalEvent from '../ModalEvent';
 
 import './style.css';
 
+
 const PER_PAGE = 9;
 
 const EventList = () => {
   const { data, error } = useData();
-  const [type, setType] = useState();
+  const [type, setType] = useState(null);  // Initialiser à null
   const [currentPage, setCurrentPage] = useState(1);
-  let filteredEvents = (
-    (!type
-      ? data?.events
-      : data?.events.filter((event) => event.type === type)) || []
-  ).filter((_event, index) => {
-    if (
-      (currentPage - 1) * PER_PAGE <= index &&
-      PER_PAGE * currentPage > index
-    ) {
-      return true;
-    }
-    return false;
-  });
 
-  filteredEvents = filteredEvents.sort((evtA, evtB) =>
+  const filteredEvents = (
+    !type
+      ? data?.events
+      : data?.events.filter((event) => event.type === type)
+  ) || [];
+
+  console.log("Type selected:", type);
+console.log("Filtered events:", filteredEvents);
+
+  // Pagination: filtrer les événements par page
+  const paginatedEvents = filteredEvents.slice(
+    (currentPage - 1) * PER_PAGE,
+    currentPage * PER_PAGE
+  );
+
+  // Trier les événements par date
+  const sortedEvents = paginatedEvents.sort((evtA, evtB) =>
     new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
   );
 
   const changeType = (evtType) => {
-    setCurrentPage(1);
+    setCurrentPage(1); // Réinitialiser la page lors du changement de catégorie
     setType(evtType);
   };
 
-  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
-  const typeList = new Set(data?.events.map((event) => event.type));
+  const pageNumber = Math.ceil(filteredEvents.length / PER_PAGE);  // Utiliser Math.ceil()
+
+  const typeList = Array.from(new Set(data?.events.map((event) => event.type)));
+
   return (
     <>
-      {error && <div>An error occured</div>}
+      {error && <div>An error occurred</div>}
       {data === null ? (
         'loading'
       ) : (
         <>
-          <h3 className='SelectTitle'>Catégories</h3>
+          <h3 className="SelectTitle">Catégories</h3>
           <Select
-            selection={Array.from(typeList)}
+            selection={typeList}
             onChange={(value) => (value ? changeType(value) : changeType(null))}
           />
-          <div id='events' className='ListContainer'>
-            {filteredEvents.map((event) => (
+          <div id="events" className="ListContainer">
+            {sortedEvents.map((event) => (
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
                   <EventCard
@@ -65,10 +71,9 @@ const EventList = () => {
               </Modal>
             ))}
           </div>
-          <div className='Pagination'>
-            {[...Array(pageNumber || 0)].map((_, n) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <a key={n} href='#events' onClick={() => setCurrentPage(n + 1)}>
+          <div className="Pagination">
+            {Array.from({ length: pageNumber }).map((_, n) => (
+              <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}>
                 {n + 1}
               </a>
             ))}

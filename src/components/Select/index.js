@@ -11,15 +11,18 @@ const Select = ({
   name,
   titleEmpty,
   label,
-  type = 'normal',
+  type = "normal",
 }) => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(null);
   const [collapsed, setCollapsed] = useState(true);
+
   const changeValue = (newValue) => {
+    console.log("New value:", newValue); // C'est ok
     setValue(newValue);
-    setCollapsed(true);
-    onChange(newValue);
+    setCollapsed(true); // Fermer le menu déroulant après sélection
+    onChange(newValue); // Passer la nouvelle valeur au parent
   };
+
   return (
     <div className={`SelectContainer ${type}`} data-testid='select-testid'>
       {label && <div className='label'>{label}</div>}

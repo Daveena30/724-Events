@@ -74,6 +74,7 @@ describe("When Events is created", () => {
           bubbles: true,
         })
       );
+      //console.log("Category selected for filtering: conférence");
       fireEvent(
         (await screen.findAllByText("soirée entreprise"))[0],
         new MouseEvent("click", {
@@ -83,6 +84,7 @@ describe("When Events is created", () => {
       );
 
       await screen.findByText("Conférence #productCON");
+      //console.log("Events filtered:", screen.queryAllByText("Conférence #productCON"));
       expect(screen.queryByText("Forum #productCON")).not.toBeInTheDocument();
     });
   });

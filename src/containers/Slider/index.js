@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useData } from '../../contexts/DataContext';
 import { getMonth } from '../../helpers/Date';
 
@@ -8,10 +8,13 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
 
-  const byDateDesc =
+  const byDateDesc = useMemo(() => {
+    return (
     data?.focus?.sort((evtA, evtB) =>
       new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
-    ) || [];
+    ) || []
+    );
+  }, [data?.focus]);
 
     useEffect(() => {
       const interval = setInterval(() => {
