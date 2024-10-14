@@ -7,6 +7,7 @@ import './style.scss';
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
+  //const [paused, setPaused] = useState(false); // État pour savoir si le slider est en pause
 
   const byDateDesc = useMemo(() => {
     return (
@@ -18,13 +19,31 @@ const Slider = () => {
 
     useEffect(() => {
       const interval = setInterval(() => {
+        //if (!paused) { // Vérifie si le slider n'est pas en pause
         setIndex((prevIndex) =>
           prevIndex < byDateDesc.length - 1 ? prevIndex + 1 : 0
         );
+      //}
       }, 5000);
       return () => clearInterval(interval);
-    }, [byDateDesc]);
+    }, [/*paused*/, byDateDesc]);
   
+    // Gérer l'appui sur la barre d'espace pour mettre le slider en pause
+  //useEffect(() => {
+    //const handleKeyDown = (event) => {
+      //if (event.code === 'Space') { // Vérifie si la barre d'espace est pressée
+       // event.preventDefault(); // Empêche le défilement de la page
+       // setPaused((prevPaused) => !prevPaused); // Inverse l'état de pause
+     // }
+   // };
+
+    //window.addEventListener('keydown', handleKeyDown); // Ajoute l'écouteur d'événements
+
+    //return () => {
+     // window.removeEventListener('keydown', handleKeyDown); // Nettoie l'écouteur d'événements
+    //};
+  //}, []);
+
 
   const handleRadioChange = (radioIdx) => {
     setIndex(radioIdx);
