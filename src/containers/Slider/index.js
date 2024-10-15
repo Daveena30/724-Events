@@ -26,7 +26,7 @@ const Slider = () => {
       //}
       }, 5000);
       return () => clearInterval(interval);
-    }, [/*paused*/, byDateDesc]);
+    }, [/*paused,*/ byDateDesc]);
   
     // Gérer l'appui sur la barre d'espace pour mettre le slider en pause
   //useEffect(() => {
