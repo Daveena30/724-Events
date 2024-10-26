@@ -31,9 +31,9 @@ console.log("Filtered events:", filteredEvents);
   );
 
   // Trier les événements par date
-  const sortedEvents = paginatedEvents.sort((evtA, evtB) =>
-    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
-  );
+  const sortedEvents = paginatedEvents.toSorted((evtA, evtB) =>
+  new Date(evtB.date) - new Date(evtA.date)
+);
 
   const changeType = (evtType) => {
     setCurrentPage(1); // Réinitialiser la page lors du changement de catégorie
